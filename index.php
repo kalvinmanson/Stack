@@ -30,7 +30,7 @@
   <body>
   	<div class="container">
     	<header>
-        <h1 class="animated flip" style="display:inline-block;">Titulo del sitio</h1>
+        <h1 class="animated flip" style="display:inline-block;">Titulo del sitio <i class="fa fa-android"></i></h1>
         </header>
         <?php //alert
 		if(isset($_SESSION['alert']) && !empty($_SESSION['alert'])) { 
