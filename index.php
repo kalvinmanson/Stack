@@ -20,10 +20,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="css/jquery.fancybox.css" rel="stylesheet" media="screen">
-    <link href="css/animate.min.css" rel="stylesheet" media="screen">
-    <link href="css/main.css" rel="stylesheet" media="screen">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="/css/jquery.fancybox.css" rel="stylesheet" media="screen">
+    <link href="/css/animate.min.css" rel="stylesheet" media="screen">
+    <link href="/css/main.css" rel="stylesheet" media="screen">
     <?php echo $config['site_metas']; ?>
   </head>
   <body>
@@ -53,16 +54,18 @@
             ------------------------
             <?php print_r($_SESSION); ?>
             -------------------------
+            <?php print_r($lang); ?>
+            -------------------------
             <?php echo $file; ?>
         </pre>
     </div>
 
 
-    <script src="js/jquery-2.0.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.mousewheel-3.0.6.pack.js"></script>
-	<script src="js/jquery.fancybox.pack.js"></script>
-    <script src="js/main.js"></script>
+    <script src="/js/jquery-2.0.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.mousewheel-3.0.6.pack.js"></script>
+	<script src="/js/jquery.fancybox.pack.js"></script>
+    <script src="/js/main.js"></script>
 
   </body>
 </html>

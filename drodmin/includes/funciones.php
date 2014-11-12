@@ -309,29 +309,28 @@ function comprobar_email($email){
    	else 
       	 return FALSE;
 }
+//convertir urls con enlaces a links
 function paralink($texto){
-
-/*** hacer en http.// todas las urls ***/
-$texto = preg_replace("/([^\w\/])(www\.[a-z0-9\-]+\.[a-z0-9\-]+)/i", "$1http://$2",$texto);
-/*** hacer las url en link ***/
-$texto = preg_replace("/([\w]+:\/\/[\w-?&;#~=\.\/\@]+[\w\/])/i","<a title='Click para ir al link' target=\"_blank\" href=\"$1\">$1</A>",$texto);
-/*** hacer los emails en links***/
-$texto = preg_replace("/([\w-?&;#~=\.\/]+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?))/i","<A HREF=\"mailto:$1\">$1</A>",$texto);
-
-return $texto;
+	/*** hacer en http.// todas las urls ***/
+	$texto = preg_replace("/([^\w\/])(www\.[a-z0-9\-]+\.[a-z0-9\-]+)/i", "$1http://$2",$texto);
+	/*** hacer las url en link ***/
+	$texto = preg_replace("/([\w]+:\/\/[\w-?&;#~=\.\/\@]+[\w\/])/i","<a title='Click para ir al link' target=\"_blank\" href=\"$1\">$1</A>",$texto);
+	/*** hacer los emails en links***/
+	$texto = preg_replace("/([\w-?&;#~=\.\/]+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?))/i","<A HREF=\"mailto:$1\">$1</A>",$texto);
+	
+	return $texto;
 }
 function enviar_email($para, $paran, $cc, $asunto, $content) {
 	$destinatario = $para; 
 	$asunto = $asunto; 
 	$cuerpo = '
-	<a href="http://labcarecolombia.com"><img src="http://dev.internetya.co/labcare/web/img/logo.jpg"></a>
+	<a href="http://campuzoide.com"><img src="http://campuzoide.com/img/logo-campuzoide.png"></a>
 	<hr>
 	'.$content.'
 	<hr>
-	<p><strong>Labcare de Colombia Ltda.</strong><br>
-	Teléfonos. (57+1) 8985201 - (57+1) 8985202<br>
-	Email. info@labcarecolombia.com</p>
-	<small>Si no desea recibir mas email escribanos <a href="http://dev.internetya.co/labcare/web/contacto.html">aqui</a>.</small>
+	<p><strong>Campuzoide.</strong><br>
+	Teléfonos. (+57-1) 2513976 - (+57) 3143390071<br>
+	Email. kalvinmanson@campuzoide.com</p>
 	'; 
 	
 	//para el envío en formato HTML 
@@ -339,7 +338,7 @@ function enviar_email($para, $paran, $cc, $asunto, $content) {
 	$headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
 	
 	//dirección del remitente 
-	$headers .= "From: No-Reply Labcare <no-reply@labcarecolombia.com>\r\n"; 
+	$headers .= "From: No-Reply Labcare <no-reply@campuzoide.com>\r\n"; 
 	
 	//dirección de respuesta, si queremos que sea distinta que la del remitente 
 	
@@ -347,7 +346,7 @@ function enviar_email($para, $paran, $cc, $asunto, $content) {
 	$headers .= "Cc: ".$cc."\r\n"; 
 	
 	//direcciones que recibirán copia oculta 
-	$headers .= "Bcc: jjaime@internetya.co\r\n"; 
+	$headers .= "Bcc: templario18@gmail.com\r\n"; 
 	
 	if(mail($destinatario,$asunto,$cuerpo,$headers)) {
 		return true;
