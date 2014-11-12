@@ -1,4 +1,19 @@
 <?php
+/////////////////////////////////////////////////////////////////
+// 				Funciones cargadas
+//	nosqlinj 				= Eviar SQL Injection
+//	permitir 				= Acceso al sitio ACL
+//	limitar					= Limitar cantidad de palabras
+//	amigable				= Hacer Urls amigables
+//	getYTid					= Obtener Ids de youtube
+//	getMetaDescription		= Obtener una meta descripcion
+//	getMetaKeywords			= Obtener Metakeywords
+//	comprobar_email			= Validar un Email
+//	paralink				= Convertir textos a links
+//	enviar_email			= Enviar un email
+//	
+//	
+//////////////////////////////////////////////////////////////////
 //Evitar el SQL Injection
 function nosqlinj($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {

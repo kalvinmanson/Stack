@@ -14,8 +14,8 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['form'
 	$usuario_tr = $m->totalrows($query);
 	if($usuario_tr == 1) {
 		$usuario = $m->query($query);
-		$_SESSION['usuario'] = $usuario[0]['dro_users']['username'];
-		$_SESSION['rol'] = $usuario[0]['dro_users']['rol'];
+		$_SESSION['User']['username'] = $usuario[0]['dro_users']['username'];
+		$_SESSION['User']['rol'] = $usuario[0]['dro_users']['rol'];
 		$_SESSION['alert_tipo'] = "info";
 		$_SESSION['alert'] = "Bienvenido de nuevo ".$usuario[0]['dro_users']['username'];
 		if(isset($_POST['loginback'])) { header('Location: '.$_POST['loginback']); die(); }
@@ -28,28 +28,37 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['form'
 }
 //Registrar usuario
 if(isset($_POST['form']) && $_POST['form'] == "register") {
-	$re = 0;
+	$re = array();
 	//Valida username
 	if(!isset($_POST['username']) || empty($_POST['username']) || strlen($_POST['username']) < 4 || strlen($_POST['username']) > 15 || amigable($_POST['username']) != $_POST['username']) { 
-	$re = 1; $re1 = 1; $rm1 = "El usuario es obligatorio, entre 6 y 15 caracteres sin espacios ni signos."; }
+	array_push($re,"El usuario es obligatorio, entre 6 y 15 caracteres sin espacios ni signos."); }
 	$existe = $m->totalrows("SELECT * FROM dro_users WHERE username = '".$_POST['username']."'");
 	if($existe > 0) { 
-	$re = 1; $re2 = 1; $rm2 = "El usuario ya se encuentra registrado."; }
+	array_push($re,"El usuario ya se encuentra registrado."); }
 	//valida email
 	if(!isset($_POST['email']) || empty($_POST['email']) || comprobar_email($_POST['email']) == 0) { 
-	$re = 1; $re3 = 1; $rm3 = "El email es obligatorio y debe ser una direccion de correo electrónico valida."; }
+	array_push($re,"El email es obligatorio y debe ser una direccion de correo electrónico valida."); }
 	$existe = $m->totalrows("SELECT * FROM dro_users WHERE email = '".$_POST['email']."'");
 	if($existe > 0) { 
-	$re = 1; $re4 = 1; $rm4 = "El email ya se encuentra registrado."; }
+	array_push($re,"El email ya se encuentra registrado."); }
 	//valida password
 	if(!isset($_POST['password']) || empty($_POST['password']) || strlen($_POST['password']) < 8 || strlen($_POST['password']) > 15) { 
-	$re = 1; $re5 = 1; $rm5 = "El password es obligatorio, entre 8 y 15 caracteres."; }
+	array_push($re,"El password es obligatorio, entre 8 y 15 caracteres."); }
 	if(!isset($_POST['cpassword']) || empty($_POST['cpassword']) || $_POST['cpassword'] != $_POST['password']) { 
-	$re = 1; $re6 = 1; $rm6 = "La confirmacion no coincide con el password."; }
+	array_push($re,"La confirmacion no coincide con el password."); }
 	
-	if($re == 0) {
+	if(count($re) > 0) {
+		$cuerpoalert = "<p>Se presentaron los siguientes problemas:</p><ul>";
+		foreach($re as &$rei) {
+			$cuerpoalert.= "<li>".$rei."</li>";
+		}
+		$cuerpoalert.= "</ul>";
+		$_SESSION['alert_tipo'] = "danger";
+		$_SESSION['alert'] = $cuerpoalert;
+		header('Location: /users');  die();
+	} else {
 		$ahora = date("Y-m-d H:i:s");
-		$query = sprintf("INSERT INTO dro_users (username, password, email, country_id, city, name, birthdate, document, adress, phone, created) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+		$query = sprintf("INSERT INTO dro_users (username, password, email, country_id, city, name, birthdate, adress, phone, created) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 	   nosqlinj(amigable($_POST['username']), "text"),
 	   nosqlinj(sha1($_POST['password']), "text"),
 	   nosqlinj($_POST['email'], "text"),
@@ -57,7 +66,6 @@ if(isset($_POST['form']) && $_POST['form'] == "register") {
 	   nosqlinj($_POST['city'], "text"),
 	   nosqlinj($_POST['name'], "text"),
 	   nosqlinj($_POST['birthdate'], "date"),
-	   nosqlinj($_POST['document'], "text"),
 	   nosqlinj($_POST['adress'], "text"),
 	   nosqlinj($_POST['phone'], "int"),
 	   nosqlinj($ahora, "date"));
@@ -72,12 +80,11 @@ if(isset($_POST['form']) && $_POST['form'] == "register") {
 }
 //Actualizar perfil 
 if(isset($_POST['form']) && $_POST['form'] == "perfil" && isset($logged[0]['dro_users']['id']) && $logged[0]['dro_users']['id'] > 0) {
-	$query = sprintf("UPDATE dro_users SET country_id=%s, city=%s, name=%s, birthdate=%s, document=%s, adress=%s, phone=%s, modified=%s WHERE id=%s",
+	$query = sprintf("UPDATE dro_users SET country_id=%s, city=%s, name=%s, birthdate=%s, adress=%s, phone=%s, modified=%s WHERE id=%s",
 	   nosqlinj($_POST['country_id'], "int"),
 	   nosqlinj($_POST['city'], "text"),
 	   nosqlinj($_POST['name'], "text"),
 	   nosqlinj($_POST['birthdate'], "date"),
-	   nosqlinj($_POST['document'], "date"),
 	   nosqlinj($_POST['adress'], "text"),
 	   nosqlinj($_POST['phone'], "text"),
 	   nosqlinj(date("Y-m-d H:i:s"), "date"),
@@ -129,7 +136,7 @@ $dro_titulo = "Bienvenido a Droni.co";
 $dro_descripcion = "Consulte y administre sus facturas, solicitudes y cotizaciones de manera rapida y eficiente en linea";
 
 } if($execute == 2) { ?>
-<?php if(isset($logged) && !empty($logged[0]['dro_users']['username'])) { ?>
+<?php if(isset($logged[0])) { ?>
 <div class="row">
 	<div class="col-sm-6">
         <form name="perfil" action="" method="post">
@@ -158,12 +165,7 @@ $dro_descripcion = "Consulte y administre sus facturas, solicitudes y cotizacion
         	<div class="form-group">
               <label for="name">Nombre Completo</label>
               <input type="text" class="form-control" name="name" placeholder="Nombre completo" value="<?php echo $logged[0]['dro_users']['name'];?>" required>
-            </div>
-            <div class="form-group">
-              <label for="document">Documento de identidad</label>
-              <input type="text" class="form-control" name="document" placeholder="CC. 10101010101" value="<?php echo $logged[0]['dro_users']['document'];?>" required>
-            </div>
-            
+            </div>            
             <div class="form-group">
               <label for="country_id">País</label>
               <select name="country_id" class="form-control">
@@ -209,59 +211,50 @@ $dro_descripcion = "Consulte y administre sus facturas, solicitudes y cotizacion
     </div>
     <div class="col-sm-6">
     	<h3>Registro</h3>
-    	<form role="form" name="register" action="" method="post">
-            <div class="form-group input-group<?php if($re1 == 1 || $re2 == 1) { echo ' form-group has-error'; } ?>">
+    	<form role="form" name="register" action="" method="post" autocomplete="off">
+            <div class="form-group input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input type="text" class="form-control" name="username" placeholder="Usuario"<?php if(isset($_POST['username'])) { echo ' value="'.$_POST['username'].'"'; } ?> required>
+              <input type="text" class="form-control" name="username" autocomplete="off" placeholder="Usuario" required>
             </div>
-            <?php if($re1 == 1) { echo '<p class="text-danger">'.$rm1.'</p>'; } if($re2 == 1) { echo '<p class="text-danger">'.$rm2.'</p>'; } ?>
-            <div class="form-group input-group<?php if($re3 == 1 || $re4 == 1) { echo ' form-group has-error'; } ?>">
+            <div class="form-group input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-              <input type="email" class="form-control" name="email" placeholder="Email"<?php if(isset($_POST['email'])) { echo ' value="'.$_POST['email'].'"'; } ?> required>
+              <input type="email" class="form-control" name="email" autocomplete="off" placeholder="Email" required>
             </div>
-            <?php if($re3 == 1) { echo '<p class="text-danger">'.$rm4.'</p>'; } if($re4 == 1) { echo '<p class="text-danger">'.$rm4.'</p>'; } ?>
-            <div class="form-group input-group<?php if($re5 == 1) { echo ' form-group has-error'; } ?>">
+            <div class="form-group input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <input type="password" class="form-control" name="password" placeholder="Password" required>
+              <input type="password" class="form-control" name="password" placeholder="Password" autocomplete="off" required>
             </div>
-            <?php if($re5 == 1) { echo '<p class="text-danger">'.$rm5.'</p>'; } ?>
-            <div class="form-group input-group<?php if($re6 == 1) { echo ' form-group has-error'; } ?>">
+            <div class="form-group input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
               <input type="password" class="form-control" name="cpassword" placeholder="Confirma tu Password" required>
             </div>
-            <?php if($re6 == 1) { echo '<p class="text-danger">'.$rm6.'</p>'; } ?>
             <div class="form-group">
               <label for="name">Nombre Completo</label>
-              <input type="text" class="form-control" name="name" placeholder="Nombre completo"<?php if(isset($_POST['name'])) { echo ' value="'.$_POST['name'].'"'; } ?> required>
+              <input type="text" class="form-control" name="name" placeholder="Nombre completo" required>
             </div>
             <div class="form-group">
               <label for="name">Fecha de naciemiento</label>
-              <input type="date" class="form-control" name="name" <?php if(isset($_POST['birthdate'])) { echo ' value="'.$_POST['birthdate'].'"'; } ?> required>
-            </div>
-            <div class="form-group">
-              <label for="document">Documento de identidad</label>
-              <input type="text" class="form-control" name="document" placeholder="CC. 10101010101"<?php if(isset($_POST['document'])) { echo ' value="'.$_POST['document'].'"'; } ?> required>
-            </div>
-            
+              <input type="date" class="form-control" name="name" required>
+            </div>            
             <div class="form-group">
               <label for="country_id">País</label>
               <select name="country_id" class="form-control">
               <?php foreach($form_countries as &$form_countrie) { ?>
-                <option value="<?php echo $form_countrie['dro_countries']['id']; ?>"<?php if(isset($_POST['country_id']) && $_POST['country_id'] == $form_countrie['dro_countries']['id']) { echo ' selected'; } ?>><?php echo $form_countrie['dro_countries']['name']; ?></option>
+                <option value="<?php echo $form_countrie['dro_countries']['id']; ?>"><?php echo $form_countrie['dro_countries']['name']; ?></option>
               <?php } ?>
               </select>
             </div>
             <div class="form-group">
               <label for="city">Ciudad</label>
-              <input type="text" class="form-control" name="city"<?php if(isset($_POST['city'])) { echo ' value="'.$_POST['city'].'"'; } ?> required>
+              <input type="text" class="form-control" name="city" required>
             </div>
             <div class="form-group">
               <label for="adress">Dirección</label>
-              <input type="text" class="form-control" name="adress"<?php if(isset($_POST['adress'])) { echo ' value="'.$_POST['adress'].'"'; } ?> required>
+              <input type="text" class="form-control" name="adress" required>
             </div>
             <div class="form-group">
               <label for="phone">Teléfono</label>
-              <input type="text" class="form-control" name="phone"<?php if(isset($_POST['phone'])) { echo ' value="'.$_POST['phone'].'"'; } ?> required>
+              <input type="text" class="form-control" name="phone" required>
             </div>
             <input type="hidden" name="loginback" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
             <input type="hidden" name="form" value="register">

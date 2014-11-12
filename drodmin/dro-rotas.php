@@ -26,9 +26,10 @@ if($execute == 1) {
 	//AGREGAR CONTENIDO
 	if(isset($_POST['form']) && $_POST['form'] == "add") {
 		//cargar archivo
-		if(!empty($_FILES['archivo']['tmp_name'])) {
+		if(!empty($_FILES['archivo']['tmp_name']) && $_FILES["archivo"]["size"] < 900000) {
 			$nombrefile = rand(1000, 9999)."_".amigable($_POST['name'])."".strrchr($_FILES['archivo']['name'],'.');
 			move_uploaded_file($_FILES['archivo']['tmp_name'],'../contenido/'.$nombrefile.'');
+			unlink('../contenido/'.$registro[0]['dro_rotas']['picture']);
 		} else { $nombrefile = ""; }
 	$query = sprintf("INSERT INTO dro_rotas (name, picture, description, orden, link, lang, created, modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
 	   nosqlinj($_POST['name'], "text"),
@@ -52,7 +53,7 @@ if($execute == 1) {
 	}
 	//EDITAR CONTENIDO
 	if(isset($_POST['form']) && $_POST['form'] == "edit" && $_POST['id'] > 0) {
-		if(!empty($_FILES['archivo']['name'])) {
+		if(!empty($_FILES['archivo']['tmp_name']) && $_FILES["archivo"]["size"] < 900000) {
 			$nombrefile = rand(1000, 9999)."_".amigable($_POST['name'])."".strrchr($_FILES['archivo']['name'],'.');
 			move_uploaded_file($_FILES['archivo']['tmp_name'],'../contenido/'.$nombrefile.'');
 		} else { $nombrefile = $_POST['archivo_antiguo']; }
@@ -77,6 +78,7 @@ if($execute == 1) {
 	//ELIMINAR CONTENIDO
 	if(isset($_POST['dell']) && $_POST['dell'] > 0) {
 		$result = $m->delete('dro_rotas','id='.$_POST['dell']);
+		unlink('../contenido/'.$registro[0]['dro_rotas']['picture']);
 		
 		//Log
 			$logmsg = "Registro eliminado ID: ".$_POST['dell'];

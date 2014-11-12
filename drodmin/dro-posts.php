@@ -26,11 +26,14 @@ if($execute == 1) {
 	//AGREGAR CONTENIDO
 	if(isset($_POST['form']) && $_POST['form'] == "add") {
 		//cargar archivo
-		if(!empty($_FILES['archivo']['tmp_name'])) {
+		if(!empty($_FILES['archivo']['tmp_name']) && $_FILES["archivo"]["size"] < 900000) {
 			$nombrefile = rand(1000, 9999)."_".amigable($_POST['name'])."".strrchr($_FILES['archivo']['name'],'.');
 			move_uploaded_file($_FILES['archivo']['tmp_name'],'../contenido/'.$nombrefile.'');
 		} else { $nombrefile = ""; }
-	$query = sprintf("INSERT INTO dro_posts (name, slug, picture, content, created, lang, modified) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+		//validar slug
+		$val_slug = $m->query("SELECT * FROM dro_posts WHERE slug LIKE '".amigable($_POST['name'])."%'");
+		if(count($val_slug) > 0) { $slug = amigable($_POST['name'])."-".(count($val_slug) + 1);	} else { $slug = amigable($_POST['name']); }
+	$query = sprintf("INSERT INTO dro_posts (name, slug, picture, content, lang, created, modified) VALUES (%s, %s, %s, %s, %s, %s, %s)",
 	   nosqlinj($_POST['name'], "text"),
 	   nosqlinj(amigable($_POST['name']), "text"),
 	   nosqlinj($nombrefile, "text"),
@@ -51,9 +54,10 @@ if($execute == 1) {
 	}
 	//EDITAR CONTENIDO
 	if(isset($_POST['form']) && $_POST['form'] == "edit" && $_POST['id'] > 0) {
-		if(!empty($_FILES['archivo']['name'])) {
+		if(!empty($_FILES['archivo']['tmp_name']) && $_FILES["archivo"]["size"] < 900000) {
 			$nombrefile = rand(1000, 9999)."_".amigable($_POST['name'])."".strrchr($_FILES['archivo']['name'],'.');
 			move_uploaded_file($_FILES['archivo']['tmp_name'],'../contenido/'.$nombrefile.'');
+			unlink('../contenido/'.$registro[0]['dro_posts']['picture']);
 		} else { $nombrefile = $_POST['archivo_antiguo']; }
 	$query = sprintf("UPDATE dro_posts SET name=%s, picture=%s, content=%s, lang=%s, modified=%s WHERE id=%s",
 	   nosqlinj($_POST['name'], "text"),
@@ -74,6 +78,7 @@ if($execute == 1) {
 	//ELIMINAR CONTENIDO
 	if(isset($_POST['dell']) && $_POST['dell'] > 0) {
 		$result = $m->delete('dro_posts','id='.$_POST['dell']);
+		unlink('../contenido/'.$registro[0]['dro_posts']['picture']);
 		
 		//Log
 			$logmsg = "Registro eliminado ID: ".$_POST['dell'];
@@ -210,7 +215,7 @@ if($execute == 2) { ?>
 						<small><?php echo $registro['dro_posts']['slug']; ?></small></td>
                     <td><?php echo $registro['dro_posts']['picture']; ?></td>
                     <td class="options-width">
-                    	<a href="../ver-<?php echo $registro['dro_posts']['slug']; ?>.html" target="_blank" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i></a> 
+                    	<a href="/blog/<?php echo $registro['dro_posts']['slug']; ?>" target="_blank" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i></a> 
                         <a href="index.php?o=<?php echo $o; ?>&a=edit&id=<?php echo $registro['dro_posts']['id']; ?>" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i></a> 
                         <a href="index.php?o=<?php echo $o; ?>&a=dell&id=<?php echo $registro['dro_posts']['id']; ?>" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a></td>
                   </tr>

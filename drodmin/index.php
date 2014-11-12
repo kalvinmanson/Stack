@@ -8,10 +8,10 @@
 */
 session_start(); include("includes/funciones.php"); include("includes/db.php");
 if(isset($_GET['do']) && $_GET['do'] == "logout") { session_destroy(); }
-if(!permitir("Dronico,Admin", $_SESSION['rol'])) { header('Location: login.php');}
+if(!permitir("Dronico,Admin", $_SESSION['User']['rol'])) { header('Location: login.php');}
 	//Usuario
 	$m = new mysql();
-	$usuario_log = $m->query("SELECT * FROM dro_users WHERE username = '".$_SESSION['usuario']."'");
+	$usuario_log = $m->query("SELECT * FROM dro_users WHERE username = '".$_SESSION['User']['username']."'");
 if(isset($_GET['o']) && is_file("dro-".$_GET['o'].".php")) { $file="dro-".$_GET['o'].".php"; } else { $file="dro-home.php"; }
 //Contorl de excucion
 $execute = 1;

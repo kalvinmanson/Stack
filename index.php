@@ -6,7 +6,7 @@
 	
 	$m = new mysql();
 	//loguear usuario
-	if(isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) { $logged = $m->query("SELECT * FROM dro_users WHERE username = '".$_SESSION['usuario']."'"); }
+	if(isset($_SESSION['User']['username']) && !empty($_SESSION['User']['username'])) { $logged = $m->query("SELECT * FROM dro_users WHERE username = '".$_SESSION['User']['username']."'"); }
 	
 	if(isset($_GET['dro']) && is_file("dro-".$_GET['dro'].".php")) { $file = "dro-".$_GET['dro'].".php"; }
 	else { $file = "dro-home.php"; } 

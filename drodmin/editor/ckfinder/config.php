@@ -30,7 +30,7 @@ function CheckAuthentication()
 	// ... where $_SESSION['IsAuthorized'] is set to "true" as soon as the
 	// user logs in your system. To be able to use session variables don't
 	// forget to add session_start() at the top of this file.
-	if(isset($_SESSION['rol']) && ($_SESSION['rol'] == "dronico" || $_SESSION['rol'] == "admin")){
+	if(isset($_SESSION['User']['rol']) && ($_SESSION['User']['rol'] == "Dronico" || $_SESSION['User']['rol'] == "Admin") && isset($_SESSION['User']['username'])){
 		return true;
 	} else {
 		return false;
@@ -65,7 +65,7 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = '/contenido/';
+$baseUrl = '/contenido/'.$_SESSION['User']['username'].'/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the

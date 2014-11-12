@@ -15,8 +15,8 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 	$usuario_tr = $m->totalrows($query);
 	if($usuario_tr == 1) {
 		$usuario = $m->query($query);
-		$_SESSION['usuario'] = $usuario[0]['dro_users']['username'];
-		$_SESSION['rol'] = $usuario[0]['dro_users']['rol'];
+		$_SESSION['User']['username'] = $usuario[0]['dro_users']['username'];
+		$_SESSION['User']['rol'] = $usuario[0]['dro_users']['rol'];
 		header('Location: index.php');
 	}
 	else {
