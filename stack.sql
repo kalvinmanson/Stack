@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2014 at 03:48 PM
+-- Generation Time: Jan 15, 2015 at 04:37 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -23,11 +23,36 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dro_cats`
+--
+
+CREATE TABLE IF NOT EXISTS `dro_cats` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `picture` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `dro_cats`
+--
+
+INSERT INTO `dro_cats` (`id`, `name`, `slug`, `picture`, `created`, `modified`) VALUES
+(1, 'General', 'general', '7695_general.jpg', '2015-01-15 16:32:55', '2015-01-15 16:32:55');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dro_conts`
 --
 
 CREATE TABLE IF NOT EXISTS `dro_conts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat_id` int(11) DEFAULT '0',
   `name` varchar(255) CHARACTER SET latin1 NOT NULL,
   `slug` varchar(255) CHARACTER SET latin1 NOT NULL,
   `picture` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -38,14 +63,6 @@ CREATE TABLE IF NOT EXISTS `dro_conts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `dro_conts`
---
-
-INSERT INTO `dro_conts` (`id`, `name`, `slug`, `picture`, `content`, `lang`, `created`, `modified`) VALUES
-(1, 'Sobre el Fondo: Quienes Somos', 'sobre-el-fondo-quienes-somos', '9386_sobre-el-fondo-quienes-somos.jpg', '<p>El FONDO DE EMPLEADOS C&Aacute;MARA DE COMERCIO DE BOGOT&Aacute; FECCB es una Asociaci&oacute;n de Derecho Privado, sin &aacute;nimo de lucro y con un n&uacute;mero de asociados y patrimonio variable e ilimitado, constituida el 23 de octubre de 1963. Re&uacute;ne los funcionarios activos y pensionados de la CCB y sus filiales. la SOCIEDAD CAMERAL DE CERTIFICACI&Oacute;N DIGITAL - CERTIC&Aacute;MARA, la FUNDACI&Oacute;N UNIVERSITARIA EMPRESARIAL DE LA C&Aacute;MARA DE COMERCIO DE BOGOT&Aacute; -UNIEMPRESARIAL, la CORPORACI&Oacute;N AMBIENTAL EMPRESARIAL- CAEM, la CORPORACI&Oacute;N DE FERIAS Y EXPOSICIONES S.A.- CORFERIAS y la CORPORACI&Oacute;N PARA EL DESARROLLO DE LOS PARQUES Y RECREACI&Oacute;N EN SANTAF&Eacute; DE BOGOT&Aacute; - CORPARQUES Tiene como objetivos generales el estrechar entre sus miembros los v&iacute;nculos de compa&ntilde;erismo, ayuda mutua y solidaridad y el prestarles permanentes servicios, principalmente en la &aacute;reas de ahorro y cr&eacute;dito, consumo, especiales, salud y educaci&oacute;n.</p>\r\n\r\n<h2>VISI&Oacute;N</h2>\r\n\r\n<p>En el 2016 seremos l&iacute;deres en el sector solidario a nivel nacional por su gesti&oacute;n eficiente y respeto por el medio ambiente. Reconocidos por los asociados y sus familias por nuestro amplio portafolio de servicio que satisface con calidez sus necesidades y expectativas.</p>\r\n\r\n<h2>MISI&Oacute;N</h2>\r\n\r\n<p>Somos una entidad de econom&iacute;a solidaria que propende por el mejoramiento de la calida de vida de sus asociados y sus familias, apoy&aacute;ndolos con sentido humano y en funci&oacute;n de sus necesidades.</p>\r\n\r\n<h2>PRINCIPIOS</h2>\r\n\r\n<ul>\r\n	<li>Honestidad</li>\r\n	<li>Equidad</li>\r\n	<li>Solidaridad</li>\r\n	<li>Responsabilidad social</li>\r\n</ul>\r\n\r\n<h2>ORGANIGRAMA</h2>\r\n\r\n<p><img alt="" class="img-thumbnail" src="/contenido/images/organigrama(1).jpg" style="width: 100%;" />â€‹</p>\r\n\r\n<h2>NUESTROS VALORES</h2>\r\n\r\n<ul>\r\n	<li>EQUIDAD</li>\r\n	<li>SENTIDO HUMANO</li>\r\n	<li>TRANSPARENCIA</li>\r\n	<li>COMPROMISO</li>\r\n	<li>RESPONSABILIDAD SOCIAL EMPRESARIAL</li>\r\n</ul>\r\n', 'es', '2013-10-24 10:52:20', '2014-06-03 05:40:08'),
-(2, 'DiseÃ±o Web con HTML5 y CSS3', 'diseno-web-con-html5-y-css3', NULL, '<p>En este curso aprenderas a dise&ntilde;ar interfaces frontend usando el lenguaje de marcado HTML5 y las posibilideades de animar y estilizar tus producciones mediante hojas de estilo CSS3, tambien aprenderas a hacer responsive design y usar frameworks de dise&ntilde;o web para crear las mas impactantes interfaces en la red.</p>\n', '2014-', '0000-00-00 00:00:00', '2014-06-04 01:22:46');
 
 -- --------------------------------------------------------
 
@@ -324,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `dro_logs` (
   `ip` varchar(100) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `dro_logs`
@@ -338,7 +355,8 @@ INSERT INTO `dro_logs` (`id`, `user_id`, `page_log`, `log`, `ip`, `created`) VAL
 (7, 1, '/drodmin/index.php?o=rotas&a=dell&id=3', 'Registro eliminado ID: 3', '127.0.0.1', '2014-04-20 18:31:57'),
 (11, 1, '/drodmin/index.php?o=logs&a=dell', 'Logs eliminados', '127.0.0.1', '2014-04-20 22:05:49'),
 (12, 1, '/drodmin/index.php?o=rotas&a=add', 'Registro agregado: Rotador de prueba | ID: 1', '127.0.0.1', '2014-06-03 05:55:12'),
-(13, 1, '/drodmin/index.php?o=conts&a=add', 'Registro agregado: DiseÃ±o Web con HTML5 y CSS3 | ID: 2', '127.0.0.1', '2014-06-04 01:22:46');
+(13, 1, '/drodmin/index.php?o=conts&a=add', 'Registro agregado: DiseÃ±o Web con HTML5 y CSS3 | ID: 2', '127.0.0.1', '2014-06-04 01:22:46'),
+(14, 1, '/drodmin/index.php?o=cats&a=add', 'Registro agregado: General | ID: 1', '127.0.0.1', '2015-01-15 16:32:56');
 
 -- --------------------------------------------------------
 
@@ -359,13 +377,6 @@ CREATE TABLE IF NOT EXISTS `dro_posts` (
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
---
--- Dumping data for table `dro_posts`
---
-
-INSERT INTO `dro_posts` (`id`, `name`, `slug`, `picture`, `content`, `lang`, `created`, `modified`) VALUES
-(1, 'Post de prueba para el sistema', 'post-de-prueba-para-el-sistema', '7591_post-de-prueba-para-el-sistema.jpg', '<p><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem</span></p>\r\n\r\n<p><span style="font-size: 13px;">ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;Lorem ipsum dolor sit amet&nbsp;</span><span style="font-size: 13px;">Lorem ipsum dolor sit amet&nbsp;</span></p>\r\n', 'en', NULL, '2014-06-03 05:47:17');
-
 -- --------------------------------------------------------
 
 --
@@ -376,7 +387,7 @@ CREATE TABLE IF NOT EXISTS `dro_rotas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `picture` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `content` text,
   `orden` int(11) DEFAULT '0',
   `link` varchar(255) DEFAULT '#',
   `lang` varchar(5) DEFAULT 'es',
@@ -384,13 +395,6 @@ CREATE TABLE IF NOT EXISTS `dro_rotas` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `dro_rotas`
---
-
-INSERT INTO `dro_rotas` (`id`, `name`, `picture`, `description`, `orden`, `link`, `lang`, `created`, `modified`) VALUES
-(1, 'Rotador de prueba', '2019_rotador-de-prueba.jpg', 'Lorem ipsum dolor sit amet', 0, '#', 'en', '2014-06-03 05:55:12', '2014-06-03 05:55:12');
 
 -- --------------------------------------------------------
 

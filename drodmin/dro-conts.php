@@ -34,7 +34,8 @@ if($execute == 1) {
 		//validar slug
 		$val_slug = $m->query("SELECT * FROM dro_conts WHERE slug LIKE '".amigable($_POST['name'])."%'");
 		if(count($val_slug) > 0) { $slug = amigable($_POST['name'])."-".(count($val_slug) + 1);	} else { $slug = amigable($_POST['name']); }
-	$query = sprintf("INSERT INTO dro_conts (name, slug, picture, content, lang, created, modified) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+	$query = sprintf("INSERT INTO dro_conts (cat_id, name, slug, picture, content, lang, created, modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+	   nosqlinj($_POST['cat_id'], "int"),
 	   nosqlinj($_POST['name'], "text"),
 	   nosqlinj($slug, "text"),
 	   nosqlinj($nombrefile, "text"),
@@ -60,7 +61,8 @@ if($execute == 1) {
 			move_uploaded_file($_FILES['archivo']['tmp_name'],'../contenido/'.$nombrefile.'');
 			unlink('../contenido/'.$registro[0]['dro_conts']['picture']);
 		} else { $nombrefile = $_POST['archivo_antiguo']; }
-	$query = sprintf("UPDATE dro_conts SET name=%s, picture=%s, content=%s, lang=%s, modified=%s WHERE id=%s",
+	$query = sprintf("UPDATE dro_conts SET cat_id=%s, name=%s, picture=%s, content=%s, lang=%s, modified=%s WHERE id=%s",
+	   nosqlinj($_POST['cat_id'], "text"),
 	   nosqlinj($_POST['name'], "text"),
 	   nosqlinj($nombrefile, "text"),
 	   nosqlinj($_POST['content'], "text"),
@@ -87,7 +89,8 @@ if($execute == 1) {
 			
 		header('Location: index.php?o='.$o.'&m=3');
 	}
-	
+	// Listados
+	$cats = $m->query("SELECT * FROM dro_cats ORDER BY name ASC");
 	
 } //Execute control
 if($execute == 2) { ?>
@@ -107,6 +110,15 @@ if($execute == 2) { ?>
 <form action="" name="agregar" id="agregar" method="POST" enctype="multipart/form-data">
   <fieldset>
     <legend>Agregar</legend>
+    
+    <div class="form-group">
+      <label for="cat_id">Categoría</label>
+      <select name="cat_id" id="cat_id" class="form-control">
+      	<?php foreach($cats as &$cat) { ?>
+        <option value="<?php echo $cat['dro_cats']['id']; ?>"><?php echo $cat['dro_cats']['name']; ?></option>
+    	<?php } ?>
+      </select>
+    </div>
     <div class="form-group">
       <label for="name">Nombre</label>
       <input type="text" class="form-control" name="name" id="name"  placeholder="Titulo del contenido" required="required">
@@ -117,7 +129,7 @@ if($execute == 2) { ?>
     </div>
     <div class="form-group">
       <label for="content">Contenido</label>
-      <textarea name="content" class="ckeditor" id="content"></textarea>
+      <textarea name="content" class="form-control ckeditor" id="content" rows="10"></textarea>
     <script type="text/javascript">
 		var editor = CKEDITOR.replace('content');
 		CKFinder.setupCKEditor(editor,'editor/ckfinder' ) ;
@@ -140,6 +152,14 @@ if($execute == 2) { ?>
   <fieldset>
     <legend>Editar</legend>
     <div class="form-group">
+      <label for="cat_id">Categoría</label>
+      <select name="cat_id" id="cat_id" class="form-control">
+      	<?php foreach($cats as &$cat) { ?>
+        <option value="<?php echo $cat['dro_cats']['id']; ?>"<?php if($registro[0]['dro_conts']['cat_id'] == $cat['dro_cats']['id']) { echo ' selected';} ?>><?php echo $cat['dro_cats']['name']; ?></option>
+    	<?php } ?>
+      </select>
+    </div>
+    <div class="form-group">
       <label for="name">Titulo</label>
       <input type="text" class="form-control" name="name" id="name" required="required" value="<?php echo $registro[0]['dro_conts']['name']; ?>">
     </div>
@@ -153,7 +173,7 @@ if($execute == 2) { ?>
     </div>
     <div class="form-group">
       <label for="content">Contenido</label>
-      <textarea name="content" class="ckeditor" id="content"><?php echo $registro[0]['dro_conts']['content']; ?></textarea>
+      <textarea name="content" class="form-control ckeditor" id="content" rows="10"><?php echo $registro[0]['dro_conts']['content']; ?></textarea>
     <script type="text/javascript">
 		var editor = CKEDITOR.replace('content');
 		CKFinder.setupCKEditor(editor,'editor/ckfinder' ) ;

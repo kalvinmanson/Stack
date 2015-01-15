@@ -25,13 +25,11 @@ include($file);
     <meta name="generator" content="Drodmin V2.1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../js/modernizr.custom.87576.js"></script>
     <script type="text/javascript" src="editor/ckeditor.js" charset="utf-8"></script>
 	<script type="text/javascript" src="editor/ckfinder/ckfinder.js" charset="utf-8"></script>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="../css/jquery.fancybox.css" rel="stylesheet" media="screen">
-    <link href="../css/bootstrap-glyphicons.css" rel="stylesheet" media="screen">
     <link href="../css/main.css" rel="stylesheet" media="screen">
     <style type="text/css">
 		<!--
@@ -69,6 +67,7 @@ include($file);
           <ul class="dropdown-menu">
             <li><a href="?o=users">Usuarios</a></li>
             <li><a href="?o=rotas">Rotador</a></li>
+            <li><a href="?o=cats">Categorías</a></li>
             <li><a href="?o=logs">Logs</a></li>
           </ul>
         </li>
@@ -108,6 +107,6 @@ include($file);
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery.mousewheel-3.0.6.pack.js"></script>
 	<script src="../js/jquery.fancybox.pack.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../js/drodmin.js"></script>
   </body>
 </html>
