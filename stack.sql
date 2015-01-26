@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.12
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2015 at 04:37 PM
--- Server version: 5.6.16
--- PHP Version: 5.5.11
+-- Generation Time: Jan 26, 2015 at 10:12 PM
+-- Server version: 5.5.32
+-- PHP Version: 5.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `stack`
 --
+CREATE DATABASE IF NOT EXISTS `stack` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `stack`;
 
 -- --------------------------------------------------------
 
@@ -35,14 +37,15 @@ CREATE TABLE IF NOT EXISTS `dro_cats` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `dro_cats`
 --
 
 INSERT INTO `dro_cats` (`id`, `name`, `slug`, `picture`, `created`, `modified`) VALUES
-(1, 'General', 'general', '7695_general.jpg', '2015-01-15 16:32:55', '2015-01-15 16:32:55');
+(1, 'General', 'general', '7695_general.jpg', '2015-01-15 16:32:55', '2015-01-15 16:32:55'),
+(2, 'Productos', 'productos', NULL, '2015-01-26 21:44:22', '2015-01-26 21:44:22');
 
 -- --------------------------------------------------------
 
@@ -62,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `dro_conts` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -341,7 +344,7 @@ CREATE TABLE IF NOT EXISTS `dro_logs` (
   `ip` varchar(100) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `dro_logs`
@@ -356,7 +359,9 @@ INSERT INTO `dro_logs` (`id`, `user_id`, `page_log`, `log`, `ip`, `created`) VAL
 (11, 1, '/drodmin/index.php?o=logs&a=dell', 'Logs eliminados', '127.0.0.1', '2014-04-20 22:05:49'),
 (12, 1, '/drodmin/index.php?o=rotas&a=add', 'Registro agregado: Rotador de prueba | ID: 1', '127.0.0.1', '2014-06-03 05:55:12'),
 (13, 1, '/drodmin/index.php?o=conts&a=add', 'Registro agregado: DiseÃ±o Web con HTML5 y CSS3 | ID: 2', '127.0.0.1', '2014-06-04 01:22:46'),
-(14, 1, '/drodmin/index.php?o=cats&a=add', 'Registro agregado: General | ID: 1', '127.0.0.1', '2015-01-15 16:32:56');
+(14, 1, '/drodmin/index.php?o=cats&a=add', 'Registro agregado: General | ID: 1', '127.0.0.1', '2015-01-15 16:32:56'),
+(15, 1, '/drodmin/index.php?o=conts&a=add', 'Registro agregado: Contenido de prueba | ID: 3', '127.0.0.1', '2015-01-26 21:39:37'),
+(16, 1, '/drodmin/index.php?o=cats&a=add', 'Registro agregado: Productos | ID: 2', '127.0.0.1', '2015-01-26 21:44:23');
 
 -- --------------------------------------------------------
 
@@ -414,6 +419,7 @@ CREATE TABLE IF NOT EXISTS `dro_users` (
   `birthdate` date DEFAULT NULL,
   `adress` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
+  `lang` varchar(5) DEFAULT 'es',
   `active` int(11) DEFAULT '0',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -426,9 +432,9 @@ CREATE TABLE IF NOT EXISTS `dro_users` (
 -- Dumping data for table `dro_users`
 --
 
-INSERT INTO `dro_users` (`id`, `username`, `password`, `email`, `country_id`, `rol`, `city`, `name`, `birthdate`, `adress`, `phone`, `active`, `created`, `modified`) VALUES
-(1, 'dev', '8dd279ee0fa102754e38400e307ee97cb63e6ac9', 'dev@droni.co', 47, 'Dronico', 'BogotÃ¡', 'Gustavo Enrique BarragÃ¡n SÃ¡nchez', '1988-01-12', 'Cra 86 #89-56', '3143390071', 1, '1899-11-30 00:00:00', NULL),
-(2, 'dima', '07ffda8cda99a9ed112b7822a3a9bef9f61b680b', 'dima0830@gmail.com', 47, 'Admin', 'Villavicencio', 'Andrea Diaz Mateus', '1988-08-30', 'Humm numero 123-45', '3204889798', 1, '2014-04-20 03:27:12', NULL);
+INSERT INTO `dro_users` (`id`, `username`, `password`, `email`, `country_id`, `rol`, `city`, `name`, `birthdate`, `adress`, `phone`, `lang`, `active`, `created`, `modified`) VALUES
+(1, 'dev', '8dd279ee0fa102754e38400e307ee97cb63e6ac9', 'dev@droni.co', 47, 'Dronico', 'BogotÃ¡', 'Gustavo Enrique BarragÃ¡n SÃ¡nchez', '1988-01-12', 'Cra 86 #89-56', '3143390071', 'es', 1, '1899-11-30 00:00:00', NULL),
+(2, 'dima', '07ffda8cda99a9ed112b7822a3a9bef9f61b680b', 'dima0830@gmail.com', 47, 'Admin', 'Villavicencio', 'Andrea Diaz Mateus', '1988-08-30', 'Humm numero 123-45', '3204889798', 'es', 1, '2014-04-20 03:27:12', NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -227,8 +227,8 @@ if($execute == 2) { ?>
     <div class="form-group">
     	<label for="lang">Idioma</label>
     	<select name="lang" class="form-control">
-        	<option value="es"<?php if($registro[0]['dro_conts']['lang'] == "es") { echo 'selected'; } ?>>Español (es)</option>
-        	<option value="en"<?php if($registro[0]['dro_conts']['lang'] == "en") { echo 'selected'; } ?>>English (en)</option>
+        	<option value="es"<?php if($registro[0]['dro_users']['lang'] == "es") { echo 'selected'; } ?>>Español (es)</option>
+        	<option value="en"<?php if($registro[0]['dro_users']['lang'] == "en") { echo 'selected'; } ?>>English (en)</option>
         </select>
     </div>
     <div class="form-group">
