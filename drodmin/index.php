@@ -28,9 +28,8 @@ include($file);
     <script type="text/javascript" src="editor/ckeditor.js" charset="utf-8"></script>
 	<script type="text/javascript" src="editor/ckfinder/ckfinder.js" charset="utf-8"></script>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="../css/jquery.fancybox.css" rel="stylesheet" media="screen">
-    <link href="../css/main.css" rel="stylesheet" media="screen">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/jquery.fancybox.css" rel="stylesheet" media="screen">
     <style type="text/css">
 		<!--
 		body {
@@ -103,10 +102,10 @@ include($file);
 
     </div>
     
-    <script src="../js/jquery-2.0.2.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery.mousewheel-3.0.6.pack.js"></script>
-	<script src="../js/jquery.fancybox.pack.js"></script>
-    <script src="../js/drodmin.js"></script>
+    <script src="/js/jquery-2.0.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.mousewheel-3.0.6.pack.js"></script>
+	<script src="/js/jquery.fancybox.pack.js"></script>
+    <script src="/js/drodmin.js"></script>
   </body>
 </html>
