@@ -207,7 +207,11 @@ class timthumb {
 		$this->cleanCache();
 		
 		$this->myHost = preg_replace('/^www\./i', '', $_SERVER['HTTP_HOST']);
+
 		$this->src = $this->param('src');
+		if(!is_file($this->src)){
+			$this->src = "img/no_image.jpg";
+		}
 		$this->url = parse_url($this->src);
 		$this->src = preg_replace('/https?:\/\/(?:www\.)?' . $this->myHost . '/i', '', $this->src);
 		
