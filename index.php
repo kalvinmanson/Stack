@@ -56,15 +56,10 @@
         	<?php echo $config['site_footer']; ?>
         </footer>
         <pre>
-        	<?php print_r($_GET); ?>
-            ------------------------
-            <?php print_r($_POST); ?>
-            ------------------------
-            <?php print_r($_SESSION); ?>
-            -------------------------
-            <?php print_r($lang); ?>
-            -------------------------
-            <?php echo $file; ?>
+        <?php  
+		  $vars = get_defined_vars();  
+		  print_r($vars);  
+		?>
         </pre>
     </div>
 
