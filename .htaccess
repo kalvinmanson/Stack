@@ -340,7 +340,8 @@ FileETag None
 RewriteRule ^users index.php?dro=users
 RewriteRule ^logout index.php?dro=users&do=logout
 RewriteRule ^p/(.+) index.php?dro=cont&slug=$1
-RewriteRule ^blog/(.+) index.php?dro=blog&slug=$1
+RewriteRule ^blog/(.+) index.php?dro=blog&a=post&slug=$1
+RewriteRule ^blog index.php?dro=blog
 RewriteRule ^activate-(.+)-(.+) index.php?dro=login&a=activate&username=$1&key=$2
 
 </IfModule>

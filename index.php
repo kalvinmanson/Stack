@@ -31,6 +31,14 @@
   	<div class="container">
     	<header>
         <h1 class="animated flip" style="display:inline-block;">Titulo del sitio <i class="fa fa-android"></i></h1>
+        <nav>
+        	<ul class="nav nav-justified">
+            	<li><a href="/">Home</a></li>
+            	<li><a href="/blog">Blog</a></li>
+            	<li><a href="/contacto">Contacto</a></li>
+            	<li><a href="/users">Usuarios</a></li>
+            </ul>
+        </nav>
         </header>
         <?php //alert
 		if(isset($_SESSION['alert']) && !empty($_SESSION['alert'])) { 

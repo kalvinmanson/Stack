@@ -32,11 +32,8 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
     <meta name="author" content="Droni.co">
     <meta name="generator" content="Drodmin V2.1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../js/modernizr.custom.87576.js"></script>
-    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="../css/jquery.fancybox.css" rel="stylesheet" media="screen">
-    <link href="../css/bootstrap-glyphicons.css" rel="stylesheet" media="screen">
-    <link href="../css/main.css" rel="stylesheet" media="screen">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/jquery.fancybox.css" rel="stylesheet" media="screen">
 	<style>
         body {
             padding-top: 60px;
