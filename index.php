@@ -57,7 +57,7 @@
         </footer>
         <pre>
         <?php  
-		  $vars = get_defined_vars();  
+		  $vars = get_defined_vars();
 		  print_r($vars);  
 		?>
         </pre>
