@@ -10,7 +10,7 @@ if($execute == 1) {
 	if(isset($_GET['q']) && !empty($_GET['q'])) { $fq = " WHERE name LIKE '%".$_GET['q']."%'"; }
 	//paginador
 	if(isset($_GET['page']) && $_GET['page'] > 1) { $page = $_GET['page'];} else { $page = 1; }
-		$paginar = 10;
+		$paginar = 20;
 		$paginaini = ($page - 1) * $paginar;
 		$paginall = $m->totalrows('SELECT id FROM dro_posts'.$fq);
 		$totalpages = ceil($paginall / $paginar);

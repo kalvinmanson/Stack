@@ -40,5 +40,6 @@ $dro_descripcion = "Descripcion del sitio";
   	<?php } ?>
 </div>
 <?php } ?>
+<h1>Hola mundo</h1>
 
 <?php } ?>

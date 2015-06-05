@@ -6,19 +6,19 @@ if($execute == 1) {
 	
 	//MOSTRAR CONTENIDOS
 	//buscar contenidos
-	$fq = "";
+	$fq = " WHERE dro_cats.id = dro_conts.cat_id ";
 	$q = "";
-	if(isset($_GET['q']) && !empty($_GET['q'])) { $fq = " WHERE name LIKE '%".$_GET['q']."%'"; $q = $_GET['q']; }
+	if(isset($_GET['q']) && !empty($_GET['q'])) { $fq = " WHERE dro_cats.id = dro_conts.cat_id AND dro_conts.name LIKE '%".$_GET['q']."%'"; $q = $_GET['q']; }
 	//paginador
 	if(isset($_GET['page']) && $_GET['page'] > 1) { $page = $_GET['page'];} else { $page = 1; }
-		$paginar = 10;
+		$paginar = 20;
 		$paginaini = ($page - 1) * $paginar;
-		$paginall = $m->totalrows('SELECT id FROM dro_conts'.$fq);
+		$paginall = $m->totalrows('SELECT id FROM dro_conts, dro_cats '.$fq);
 		$totalpages = ceil($paginall / $paginar);
 		if($page > 1) { $prevlink = $page - 1; } else { $prevlink = "0"; }
 		if($page < $totalpages) { $nextlink = $page + 1; } else { $nextlink = "0"; }
 		//fin paginador 
-	$registros = $m->query("SELECT * FROM dro_conts ".$fq." ORDER BY modified DESC LIMIT ".$paginaini.", ".$paginar);
+	$registros = $m->query("SELECT * FROM dro_conts, dro_cats ".$fq." ORDER BY dro_conts.modified DESC LIMIT ".$paginaini.", ".$paginar);
 	
 	if(isset($_GET['id']) && $_GET['id'] > 0) {
 		$registro = $m->query("SELECT * FROM dro_conts WHERE id = '".$_GET['id']."'");
@@ -59,7 +59,10 @@ if($execute == 1) {
 		if(!empty($_FILES['archivo']['tmp_name']) && $_FILES["archivo"]["size"] < 900000) {
 			$nombrefile = rand(1000, 9999)."_".amigable($_POST['name'])."".strrchr($_FILES['archivo']['name'],'.');
 			move_uploaded_file($_FILES['archivo']['tmp_name'],'../contenido/'.$nombrefile.'');
-			unlink('../contenido/'.$registro[0]['dro_conts']['picture']);
+      //verificar si existe archivo
+      if(is_file('../contenido/'.$registro[0]['dro_conts']['picture'])) {
+        unlink('../contenido/'.$registro[0]['dro_conts']['picture']);
+      }
 		} else { $nombrefile = $_POST['archivo_antiguo']; }
 	$query = sprintf("UPDATE dro_conts SET cat_id=%s, name=%s, picture=%s, content=%s, lang=%s, modified=%s WHERE id=%s",
 	   nosqlinj($_POST['cat_id'], "text"),
@@ -74,18 +77,21 @@ if($execute == 1) {
 			
 			//Log
 			$logmsg = "Registro editado: ".$_POST['name']." | ID: ".$_POST['id'];
-			$m->execute("INSERT INTO dro_logs (user_id, page_log, log, ip, create) VALUES (".$usuario_log[0]['dro_users']['id'].", '".$_SERVER['REQUEST_URI']."', '".$logmsg."', '".$_SERVER['SERVER_ADDR']."', '".date("Y-m-d H:i:s")."')");
+			$m->execute("INSERT INTO dro_logs (user_id, page_log, log, ip, created) VALUES (".$usuario_log[0]['dro_users']['id'].", '".$_SERVER['REQUEST_URI']."', '".$logmsg."', '".$_SERVER['SERVER_ADDR']."', '".date("Y-m-d H:i:s")."')");
 			
 	header('Location: index.php?o='.$o.'&m=2');
 	}
 	//ELIMINAR CONTENIDO
 	if(isset($_POST['dell']) && $_POST['dell'] > 0) {
 		$result = $m->delete('dro_conts','id='.$_POST['dell']);
-		unlink('../contenido/'.$registro[0]['dro_conts']['picture']);
+    //verificar si existe archivo
+    if(is_file('../contenido/'.$registro[0]['dro_conts']['picture'])) {
+      unlink('../contenido/'.$registro[0]['dro_conts']['picture']);
+    }
 		
 		//Log
 			$logmsg = "Registro eliminado ID: ".$_POST['dell'];
-			$m->execute("INSERT INTO dro_logs (user_id, page_log, log, ip, create) VALUES (".$usuario_log[0]['dro_users']['id'].", '".$_SERVER['REQUEST_URI']."', '".$logmsg."', '".$_SERVER['SERVER_ADDR']."', '".date("Y-m-d H:i:s")."')");
+			$m->execute("INSERT INTO dro_logs (user_id, page_log, log, ip, created) VALUES (".$usuario_log[0]['dro_users']['id'].", '".$_SERVER['REQUEST_URI']."', '".$logmsg."', '".$_SERVER['SERVER_ADDR']."', '".date("Y-m-d H:i:s")."')");
 			
 		header('Location: index.php?o='.$o.'&m=3');
 	}
@@ -219,7 +225,8 @@ if($execute == 2) { ?>
                 <tr>
 					<th width="20">ID</th>
 					<th>Fecha</th>
-                    <th>Idioma</th>
+          <th>Idioma</th>
+          <th>Categoría</th>
 					<th>Nombre</th>
 					<th>Imagen</th>
 					<th width="100"></th>
@@ -232,6 +239,7 @@ if($execute == 2) { ?>
                     <td><small><?php echo $registro['dro_conts']['created']; ?><br>
 					<?php echo $registro['dro_conts']['modified']; ?></small></td>
                     <td><?php echo $registro['dro_conts']['lang']; ?></td>
+                    <td><?php echo $registro['dro_cats']['name']; ?></td>
                     <td><?php echo $registro['dro_conts']['name']; ?><br />
 						<small><?php echo $registro['dro_conts']['slug']; ?></small></td>
                     <td><?php echo $registro['dro_conts']['picture']; ?></td>
@@ -242,7 +250,7 @@ if($execute == 2) { ?>
                   </tr>
                 <?php } ?>
                   <tr>
-                  	<td colspan="6">
+                  	<td colspan="7">
                           <ul class="pagination">
                             <?php if($prevlink > 0){ echo '<li><a href="?o='.$o.'&page='.$prevlink.'">Prev</a></li>'; } else { echo '<li class="disabled"><a>Prev</a></li>'; } ?>
                             <?php for ($i = 1; $i <= $totalpages; $i++) { ?>
@@ -256,7 +264,7 @@ if($execute == 2) { ?>
                   </tr>
 				<?php } else { ?>
                 <tr>
-				  <td colspan="6">Aun no hay registros agregados</td>
+				  <td colspan="7">Aun no hay registros agregados</td>
   				</tr>
                 <?php } ?>
 </table>	 
