@@ -21,6 +21,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/roboto.min.css" rel="stylesheet">
+    <link href="/css/material.min.css" rel="stylesheet">
+    <link href="/css/ripples.min.css" rel="stylesheet">
+    <link href="/css/material-fullpalette.min.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet" media="screen">
     <link href="/css/jquery.fancybox.css" rel="stylesheet" media="screen">
     <link href="/css/animate.min.css" rel="stylesheet" media="screen">
@@ -33,7 +37,7 @@
         <h1 class="animated flip" style="display:inline-block;">Titulo del sitio <i class="fa fa-android"></i></h1>
         <nav>
         	<ul class="nav nav-justified">
-            	<li><a href="/">Home</a></li>
+            	<li><a href="/" class="btn btn-primary">Home</a></li>
             	<li><a href="/blog">Blog</a></li>
             	<li><a href="/contacto">Contacto</a></li>
             	<li><a href="/users">Usuarios</a></li>
@@ -66,6 +70,8 @@
 
     <script src="/js/jquery-2.0.2.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/ripples.min.js"></script>
+    <script src="/js/material.min.js"></script>
     <script src="/js/jquery.mousewheel-3.0.6.pack.js"></script>
 	<script src="/js/jquery.fancybox.pack.js"></script>
     <script src="/js/main.js"></script>

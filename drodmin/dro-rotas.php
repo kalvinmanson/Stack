@@ -29,7 +29,6 @@ if($execute == 1) {
 		if(!empty($_FILES['archivo']['tmp_name']) && $_FILES["archivo"]["size"] < 900000) {
 			$nombrefile = rand(1000, 9999)."_".amigable($_POST['name'])."".strrchr($_FILES['archivo']['name'],'.');
 			move_uploaded_file($_FILES['archivo']['tmp_name'],'../contenido/'.$nombrefile.'');
-			unlink('../contenido/'.$registro[0]['dro_rotas']['picture']);
 		} else { $nombrefile = ""; }
 	$query = sprintf("INSERT INTO dro_rotas (name, picture, content, orden, link, lang, created, modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
 	   nosqlinj($_POST['name'], "text"),
@@ -221,9 +220,12 @@ if($execute == 2) { ?>
                     <td><?php echo $registro['dro_rotas']['lang']; ?></td>
                     <td><?php echo $registro['dro_rotas']['name']; ?></td>
                     <td><?php echo $registro['dro_rotas']['picture']; ?></td>
-                    <td class="options-width">
+                    <td width="140">
+                      <div class="btn-group" role="group">
                         <a href="index.php?o=<?php echo $o; ?>&a=edit&id=<?php echo $registro['dro_rotas']['id']; ?>" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i></a> 
-                        <a href="index.php?o=<?php echo $o; ?>&a=dell&id=<?php echo $registro['dro_rotas']['id']; ?>" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a></td>
+                        <a href="index.php?o=<?php echo $o; ?>&a=dell&id=<?php echo $registro['dro_rotas']['id']; ?>" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                      </div>
+                    </td>
                   </tr>
                 <?php } ?>
                   <tr>

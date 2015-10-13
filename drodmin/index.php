@@ -19,7 +19,7 @@ include($file);
 ?><!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Drodmin v2.1.0</title>
+    <title>Drodmin v2.2.1</title>
     <meta charset="utf-8">
     <meta name="author" content="Droni.co">
     <meta name="generator" content="Drodmin V2.1.0">
@@ -29,18 +29,19 @@ include($file);
     <script type="text/javascript" src="/drodmin/editor/ckfinder/ckfinder.js" charset="utf-8"></script>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/roboto.min.css" rel="stylesheet">
+    <link href="/css/material.min.css" rel="stylesheet">
+    <link href="/css/ripples.min.css" rel="stylesheet">
+    <link href="/css/material-fullpalette.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet" media="screen">
     <link href="/css/jquery.fancybox.css" rel="stylesheet" media="screen">
+    <link href="/css/animate.min.css" rel="stylesheet" media="screen">
+    <link href="/css/main.css" rel="stylesheet" media="screen">
     <style type="text/css">
-		<!--
-		body {
-			margin-top:60px;
-			font-size:12px;
-			font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-			font:"Trebuchet MS", Arial, Helvetica, sans-serif;
-			font-style:normal;
-			}
-		-->
-	</style>
+		  <!--
+  		body { margin-top:60px;	}
+  		-->
+  	</style>
   </head>
   <body>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -53,7 +54,7 @@ include($file);
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/drodmin">Drodmin v2.1.0</a>
+      <a class="navbar-brand" href="/drodmin">Drodmin v2.2.1</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -74,13 +75,6 @@ include($file);
       <ul class="nav navbar-nav navbar-right">
         <li><a href="?do=logout"><i class="glyphicon glyphicon-log-out"></i> Salir</a></li>
       </ul>
-      <form class="navbar-form navbar-right" role="search" action="index.php">
-        <div class="form-group">
-          <input type="text" class="form-control" name="q" placeholder="Buscar registros" required>
-        </div>
-        <input type="hidden" name="o" value="buscar">
-        <button type="submit" class="btn btn-default">Buscar</button>
-      </form>
       
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -104,8 +98,10 @@ include($file);
     
     <script src="/js/jquery-2.0.2.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/ripples.min.js"></script>
+    <script src="/js/material.min.js"></script>
     <script src="/js/jquery.mousewheel-3.0.6.pack.js"></script>
-	  <script src="/js/jquery.fancybox.pack.js"></script>
+    <script src="/js/jquery.fancybox.pack.js"></script>
     <script src="/js/drodmin.js"></script>
   </body>
 </html>

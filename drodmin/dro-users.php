@@ -56,7 +56,7 @@ if($execute == 1) {
 	}
 	//EDITAR CONTENIDO
 	if(isset($_POST['form']) && $_POST['form'] == "edit" && $_POST['id'] > 0) {
-		if(!empty($_POST['npasswrod'])) { $password = sha1($_POST['npasswrod']); } else { $password = $registro[0]['dro_users']['password']; }
+		if(!empty($_POST['npassword'])) { $password = sha1($_POST['npassword']); } else { $password = $registro[0]['dro_users']['password']; }
 	$query = sprintf("UPDATE dro_users SET username=%s, password=%s, email=%s, country_id=%s, rol=%s, city=%s, name=%s, birthdate=%s, adress=%s, phone=%s, lang=%s, active=%s, modified=%s WHERE id=%s",
 	   nosqlinj($_POST['username'], "text"),
 	   nosqlinj($password, "text"),
@@ -286,10 +286,13 @@ if($execute == 2) { ?>
                     <td><?php echo $registro['dro_users']['name']; ?></td>
                     <td><?php echo $registro['dro_users']['username']; ?></td>
                     <td><?php echo $registro['dro_users']['email']; ?></td>
-                    <td class="options-width">
-                    	<a href="../ver-<?php echo $registro['dro_users']['slug']; ?>.html" target="_blank" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i></a> 
+                    <td width="140">
+                      <div class="btn-group" role="group">
+                        <a href="../ver-<?php echo $registro['dro_users']['slug']; ?>.html" target="_blank" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i></a> 
                         <a href="index.php?o=<?php echo $o; ?>&a=edit&id=<?php echo $registro['dro_users']['id']; ?>" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i></a> 
-                        <a href="index.php?o=<?php echo $o; ?>&a=dell&id=<?php echo $registro['dro_users']['id']; ?>" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a></td>
+                        <a href="index.php?o=<?php echo $o; ?>&a=dell&id=<?php echo $registro['dro_users']['id']; ?>" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                      </div>
+                    </td>
                   </tr>
                 <?php } ?>
                   <tr>

@@ -214,10 +214,13 @@ if($execute == 2) { ?>
                     <td><?php echo $registro['dro_posts']['name']; ?><br />
 						<small><?php echo $registro['dro_posts']['slug']; ?></small></td>
                     <td><?php echo $registro['dro_posts']['picture']; ?></td>
-                    <td class="options-width">
-                    	<a href="/blog/<?php echo $registro['dro_posts']['slug']; ?>" target="_blank" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i></a> 
-                        <a href="index.php?o=<?php echo $o; ?>&a=edit&id=<?php echo $registro['dro_posts']['id']; ?>" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i></a> 
-                        <a href="index.php?o=<?php echo $o; ?>&a=dell&id=<?php echo $registro['dro_posts']['id']; ?>" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a></td>
+                    <td width="140">
+                    	<div class="btn-group" role="group">
+	                    	<a href="/blog/<?php echo $registro['dro_posts']['slug']; ?>" target="_blank" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i></a> 
+	                        <a href="index.php?o=<?php echo $o; ?>&a=edit&id=<?php echo $registro['dro_posts']['id']; ?>" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i></a> 
+	                        <a href="index.php?o=<?php echo $o; ?>&a=dell&id=<?php echo $registro['dro_posts']['id']; ?>" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                    	</div>
+                    </td>
                   </tr>
                 <?php } ?>
                   <tr>
