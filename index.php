@@ -1,8 +1,8 @@
-<?php session_start(); include("drodmin/includes/config.php"); include("drodmin/includes/funciones.php"); include("drodmin/includes/db.php"); 
-//setear idioma
-	if(isset($_GET['lang']) && is_file("drodmin/includes/lang-".$_GET['lang'].".php")) { $_SESSION['lang'] = $_GET['lang']; include("drodmin/includes/lang-".$_GET['lang'].".php");} 
-	elseif(isset($_SESSION['lang']) && is_file("drodmin/includes/lang-".$_SESSION['lang'].".php")){ include("drodmin/includes/lang-".$_SESSION['lang'].".php"); }
-	else { include("drodmin/includes/lang-es.php"); } //$lang['id'] = "es"
+<?php 
+    session_start(); 
+    include("includes/config.php"); 
+    include("includes/funciones.php"); 
+    include("includes/db.php"); 
 	
 	$m = new mysql();
 	//loguear usuario
@@ -21,13 +21,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/css/roboto.min.css" rel="stylesheet">
-    <link href="/css/material.min.css" rel="stylesheet">
-    <link href="/css/ripples.min.css" rel="stylesheet">
-    <link href="/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="/css/bootstrap-material-design.min.css" rel="stylesheet" media="screen">
+    <link href="/css/ripples.min.css" rel="stylesheet" media="screen">
     <link href="/css/jquery.fancybox.css" rel="stylesheet" media="screen">
-    <link href="/css/animate.min.css" rel="stylesheet" media="screen">
+    <link href="/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="/css/animate.css" rel="stylesheet" media="screen">
     <link href="/css/main.css" rel="stylesheet" media="screen">
+
     <?php echo $config['site_metas']; ?>
   </head>
   <body>
@@ -67,11 +67,10 @@
     </div>
 
 
-    <script src="/js/jquery-2.0.2.min.js"></script>
+    <script src="/js/jquery-1.12.3.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/ripples.min.js"></script>
     <script src="/js/material.min.js"></script>
-    <script src="/js/jquery.mousewheel-3.0.6.pack.js"></script>
 	<script src="/js/jquery.fancybox.pack.js"></script>
     <script src="/js/main.js"></script>
 

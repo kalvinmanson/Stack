@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 26, 2015 at 10:12 PM
--- Server version: 5.5.32
--- PHP Version: 5.4.19
+-- Host: localhost
+-- Generation Time: May 03, 2016 at 01:00 AM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `stack`
 --
-CREATE DATABASE IF NOT EXISTS `stack` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `stack`;
 
 -- --------------------------------------------------------
 
@@ -29,15 +27,13 @@ USE `stack`;
 --
 
 CREATE TABLE IF NOT EXISTS `dro_cats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `picture` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dro_cats`
@@ -45,7 +41,8 @@ CREATE TABLE IF NOT EXISTS `dro_cats` (
 
 INSERT INTO `dro_cats` (`id`, `name`, `slug`, `picture`, `created`, `modified`) VALUES
 (1, 'General', 'general', '7695_general.jpg', '2015-01-15 16:32:55', '2015-01-15 16:32:55'),
-(2, 'Productos', 'productos', NULL, '2015-01-26 21:44:22', '2015-01-26 21:44:22');
+(2, 'Productos', 'productos', NULL, '2015-01-26 21:44:22', '2015-01-26 21:44:22'),
+(3, 'Servicios', 'servicios', '/contenido/userfiles/dev/files/corel-vs-illustrator.png', '2016-05-03 00:04:52', '2016-05-03 00:06:29');
 
 -- --------------------------------------------------------
 
@@ -54,18 +51,22 @@ INSERT INTO `dro_cats` (`id`, `name`, `slug`, `picture`, `created`, `modified`) 
 --
 
 CREATE TABLE IF NOT EXISTS `dro_conts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `cat_id` int(11) DEFAULT '0',
   `name` varchar(255) CHARACTER SET latin1 NOT NULL,
   `slug` varchar(255) CHARACTER SET latin1 NOT NULL,
   `picture` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
   `content` text CHARACTER SET latin1,
-  `lang` varchar(5) COLLATE utf8_spanish_ci DEFAULT 'es',
   `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+  `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `dro_conts`
+--
+
+INSERT INTO `dro_conts` (`id`, `cat_id`, `name`, `slug`, `picture`, `content`, `created`, `modified`) VALUES
+(8, 1, 'Home', 'home', NULL, '<p>Lorem ipsum dolor sit amet</p>\r\n', '2016-05-03 00:34:38', '2016-05-03 00:34:46');
 
 -- --------------------------------------------------------
 
@@ -74,12 +75,11 @@ CREATE TABLE IF NOT EXISTS `dro_conts` (
 --
 
 CREATE TABLE IF NOT EXISTS `dro_countries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `location_lat` varchar(255) NOT NULL,
   `location_lon` varchar(255) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=244 ;
+  `name` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=244 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dro_countries`
@@ -337,31 +337,77 @@ INSERT INTO `dro_countries` (`id`, `location_lat`, `location_lon`, `name`) VALUE
 --
 
 CREATE TABLE IF NOT EXISTS `dro_logs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT '0',
   `page_log` varchar(255) NOT NULL,
   `log` varchar(255) NOT NULL,
   `ip` varchar(100) NOT NULL,
-  `created` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+  `created` datetime NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dro_logs`
 --
 
 INSERT INTO `dro_logs` (`id`, `user_id`, `page_log`, `log`, `ip`, `created`) VALUES
-(3, 1, '/drodmin/index.php?o=rotas&a=add', 'Registro agregado: Rotador de prueba | ID: 1', '127.0.0.1', '2014-04-20 18:21:09'),
-(4, 1, '/drodmin/index.php?o=rotas&a=add', 'Registro agregado: Rotador de prueba | ID: 2', '127.0.0.1', '2014-04-20 18:25:19'),
-(5, 1, '/drodmin/index.php?o=rotas&a=edit&id=2', 'Registro editado: Rotador de prueba | ID: 2', '127.0.0.1', '2014-04-20 18:30:39'),
-(6, 1, '/drodmin/index.php?o=rotas&a=add', 'Registro agregado: Andrea Diaz Mateus | ID: 3', '127.0.0.1', '2014-04-20 18:31:49'),
-(7, 1, '/drodmin/index.php?o=rotas&a=dell&id=3', 'Registro eliminado ID: 3', '127.0.0.1', '2014-04-20 18:31:57'),
-(11, 1, '/drodmin/index.php?o=logs&a=dell', 'Logs eliminados', '127.0.0.1', '2014-04-20 22:05:49'),
-(12, 1, '/drodmin/index.php?o=rotas&a=add', 'Registro agregado: Rotador de prueba | ID: 1', '127.0.0.1', '2014-06-03 05:55:12'),
-(13, 1, '/drodmin/index.php?o=conts&a=add', 'Registro agregado: DiseÃ±o Web con HTML5 y CSS3 | ID: 2', '127.0.0.1', '2014-06-04 01:22:46'),
-(14, 1, '/drodmin/index.php?o=cats&a=add', 'Registro agregado: General | ID: 1', '127.0.0.1', '2015-01-15 16:32:56'),
-(15, 1, '/drodmin/index.php?o=conts&a=add', 'Registro agregado: Contenido de prueba | ID: 3', '127.0.0.1', '2015-01-26 21:39:37'),
-(16, 1, '/drodmin/index.php?o=cats&a=add', 'Registro agregado: Productos | ID: 2', '127.0.0.1', '2015-01-26 21:44:23');
+(17, 1, '/drodmin/index.php?o=conts&a=add', 'Registro agregado: Prueba | ID: 1', '127.0.0.1', '2016-05-02 18:42:16'),
+(18, 1, '/drodmin/index.php?o=conts&m=1', 'Registro agregado: Segundo producto de prueba | ID: 2', '127.0.0.1', '2016-05-02 18:52:28'),
+(19, 1, '/drodmin/index.php?o=conts&m=1', 'Registro agregado: Tercera pagina basura | ID: 3', '127.0.0.1', '2016-05-02 18:52:34'),
+(20, 1, '/drodmin/index.php?o=conts&m=1', 'Registro agregado: Cuarta pagina | ID: 4', '127.0.0.1', '2016-05-02 18:52:41'),
+(21, 1, '/drodmin/index.php?o=conts&a=dell&id=3', 'Registro eliminado ID: 3', '127.0.0.1', '2016-05-02 18:53:01'),
+(22, 1, '/drodmin/index.php?o=conts&a=dell&id=2', 'Registro eliminado ID: 2', '127.0.0.1', '2016-05-02 18:53:07'),
+(23, 1, '/drodmin/index.php?o=conts&a=dell&id=1', 'Registro eliminado ID: 1', '127.0.0.1', '2016-05-02 18:53:14'),
+(24, 1, '/drodmin/index.php?o=conts&m=3', 'Registro agregado: segundo de prueba | ID: 5', '127.0.0.1', '2016-05-02 18:55:32'),
+(25, 1, '/drodmin/index.php?o=conts&m=1', 'Registro agregado: tercerito | ID: 6', '127.0.0.1', '2016-05-02 18:55:38'),
+(26, 1, '/drodmin/index.php?o=conts&a=edit&id=6', 'Registro editado: tercerito | ID: 6', '127.0.0.1', '2016-05-02 19:21:00'),
+(27, 1, '/drodmin/index.php?o=conts&a=edit&id=6', 'Registro editado: tercerito | ID: 6', '127.0.0.1', '2016-05-02 19:21:23'),
+(28, 1, '/drodmin/index.php?o=conts&a=edit&id=6', 'Registro editado: tercerito | ID: 6', '127.0.0.1', '2016-05-02 19:34:22'),
+(29, 1, '/drodmin/index.php?o=conts&a=edit&id=6', 'Registro editado: tercerito | ID: 6', '127.0.0.1', '2016-05-02 20:19:50'),
+(30, 1, '/drodmin/index.php?o=conts&a=edit&id=6', 'Registro editado: tercerito | ID: 6', '127.0.0.1', '2016-05-02 20:21:03'),
+(31, 1, '/drodmin/index.php?o=conts&a=edit&id=6', 'Registro editado: tercerito | ID: 6', '127.0.0.1', '2016-05-02 20:21:50'),
+(32, 1, '/drodmin/index.php?o=conts&a=edit&id=6', 'Registro editado: tercerito | ID: 6', '127.0.0.1', '2016-05-02 20:47:35'),
+(33, 1, '/drodmin/index.php?o=conts', 'Registro agregado: Contenido redireccionado | ID: 7', '127.0.0.1', '2016-05-02 20:49:00'),
+(34, 1, '/drodmin/index.php?o=logs&a=dell', 'Logs eliminados', '127.0.0.1', '2016-05-02 21:44:45'),
+(35, 1, '/drodmin/?o=posts', 'Registro agregado: Primer post d eprueba | ID: 2', '127.0.0.1', '2016-05-02 22:46:16'),
+(36, 1, '/drodmin/index.php?o=posts&a=edit&id=2', 'Registro editado: Primer post d eprueba | ID: 2', '127.0.0.1', '2016-05-02 22:46:30'),
+(37, 1, '/drodmin/index.php?o=users&a=dell&id=2', 'Registro eliminado ID: 2', '127.0.0.1', '2016-05-02 22:48:03'),
+(38, 1, '/drodmin/index.php?o=users', 'Registro agregado: Jennyfer Carolina Jacome Suarez | ID: 3', '127.0.0.1', '2016-05-02 22:59:26'),
+(39, 1, '/drodmin/index.php?o=users&a=edit&id=3', 'Registro editado: Jennyfer Carolina Jacome Suarez | ID: 3', '127.0.0.1', '2016-05-02 23:24:38'),
+(40, 1, '/drodmin/index.php?o=users&a=edit&id=3', 'Registro editado: Jennyfer Carolina Jacome Suarez | ID: 3', '127.0.0.1', '2016-05-02 23:28:08'),
+(41, 1, '/drodmin/index.php?o=users&a=edit&id=3', 'Registro editado: Gustavo Barragan | ID: 3', '127.0.0.1', '2016-05-02 23:29:24'),
+(42, 1, '/drodmin/index.php?o=users&a=edit&id=3', 'Registro editado: Gustavo Barragan | ID: 3', '127.0.0.1', '2016-05-02 23:29:31'),
+(43, 1, '/drodmin/index.php?o=users&a=edit&id=3', 'Registro editado: Jennyfer Carolina Jacome Suarez | ID: 3', '127.0.0.1', '2016-05-02 23:29:58'),
+(44, 1, '/drodmin/index.php?o=users&a=edit&id=3', 'Registro editado: Jennyfer Carolina Jacome Suarez | ID: 3', '127.0.0.1', '2016-05-02 23:32:31'),
+(45, 1, '/drodmin/index.php?o=users&a=edit&id=3', 'Registro editado: Jennyfer Carolina Jacome Suarez | ID: 3', '127.0.0.1', '2016-05-02 23:33:00'),
+(46, 1, '/drodmin/index.php?o=users&a=edit&id=3', 'Registro editado: Jennyfer Carolina Jacome Suarez | ID: 3', '127.0.0.1', '2016-05-02 23:33:16'),
+(47, 1, '/drodmin/index.php?o=users&a=edit&id=3', 'Registro editado: Jennyfer Carolina Jacome Suarez | ID: 3', '127.0.0.1', '2016-05-02 23:33:29'),
+(48, 1, '/drodmin/index.php?o=cats', 'Registro agregado: Servicios | ID: 3', '127.0.0.1', '2016-05-03 00:04:52'),
+(49, 1, '/drodmin/index.php?o=cats&a=edit&id=3', 'Registro editado: Servicios | ID: 3', '127.0.0.1', '2016-05-03 00:05:15'),
+(50, 1, '/drodmin/index.php?o=cats&a=edit&id=3', 'Registro editado: Servicios | ID: 3', '127.0.0.1', '2016-05-03 00:05:41'),
+(51, 1, '/drodmin/index.php?o=cats&a=edit&id=3', 'Registro editado: Servicios | ID: 3', '127.0.0.1', '2016-05-03 00:06:30'),
+(52, 1, '/drodmin/index.php?o=conts&a=dell&id=7', 'Registro eliminado ID: 7', '127.0.0.1', '2016-05-03 00:34:24'),
+(53, 1, '/drodmin/index.php?o=conts&a=dell&id=6', 'Registro eliminado ID: 6', '127.0.0.1', '2016-05-03 00:34:26'),
+(54, 1, '/drodmin/index.php?o=conts&a=dell&id=5', 'Registro eliminado ID: 5', '127.0.0.1', '2016-05-03 00:34:29'),
+(55, 1, '/drodmin/index.php?o=conts&a=dell&id=4', 'Registro eliminado ID: 4', '127.0.0.1', '2016-05-03 00:34:31'),
+(56, 1, '/drodmin/index.php?o=conts', 'Registro agregado: Home | ID: 8', '127.0.0.1', '2016-05-03 00:34:38'),
+(57, 1, '/drodmin/index.php?o=conts&a=edit&id=8', 'Registro editado: Home | ID: 8', '127.0.0.1', '2016-05-03 00:34:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dro_pictures`
+--
+
+CREATE TABLE IF NOT EXISTS `dro_pictures` (
+`id` int(11) NOT NULL,
+  `cont_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) NOT NULL,
+  `picture` varchar(255) DEFAULT NULL,
+  `orden` int(11) NOT NULL DEFAULT '0',
+  `link` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -370,36 +416,21 @@ INSERT INTO `dro_logs` (`id`, `user_id`, `page_log`, `log`, `ip`, `created`) VAL
 --
 
 CREATE TABLE IF NOT EXISTS `dro_posts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `picture` varchar(255) DEFAULT NULL,
   `content` text,
-  `lang` varchar(5) DEFAULT 'es',
   `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
--- --------------------------------------------------------
+  `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `dro_rotas`
+-- Dumping data for table `dro_posts`
 --
 
-CREATE TABLE IF NOT EXISTS `dro_rotas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `picture` varchar(255) DEFAULT NULL,
-  `content` text,
-  `orden` int(11) DEFAULT '0',
-  `link` varchar(255) DEFAULT '#',
-  `lang` varchar(5) DEFAULT 'es',
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+INSERT INTO `dro_posts` (`id`, `name`, `slug`, `picture`, `content`, `created`, `modified`) VALUES
+(2, 'Primer post d eprueba', 'primer-post-d-eprueba', '/contenido/userfiles/dev/files/corel-vs-illustrator.png', '<p>Lorem ipsum dolor sit amet.</p>\r\n', '2016-05-02 22:46:15', '2016-05-02 22:46:30');
 
 -- --------------------------------------------------------
 
@@ -408,7 +439,7 @@ CREATE TABLE IF NOT EXISTS `dro_rotas` (
 --
 
 CREATE TABLE IF NOT EXISTS `dro_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
   `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
@@ -419,23 +450,103 @@ CREATE TABLE IF NOT EXISTS `dro_users` (
   `birthdate` date DEFAULT NULL,
   `adress` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
-  `lang` varchar(5) DEFAULT 'es',
-  `active` int(11) DEFAULT '0',
   `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dro_users`
 --
 
-INSERT INTO `dro_users` (`id`, `username`, `password`, `email`, `country_id`, `rol`, `city`, `name`, `birthdate`, `adress`, `phone`, `lang`, `active`, `created`, `modified`) VALUES
-(1, 'dev', '8dd279ee0fa102754e38400e307ee97cb63e6ac9', 'dev@droni.co', 47, 'Dronico', 'BogotÃ¡', 'Gustavo Enrique BarragÃ¡n SÃ¡nchez', '1988-01-12', 'Cra 86 #89-56', '3143390071', 'es', 1, '1899-11-30 00:00:00', NULL),
-(2, 'dima', '07ffda8cda99a9ed112b7822a3a9bef9f61b680b', 'dima0830@gmail.com', 47, 'Admin', 'Villavicencio', 'Andrea Diaz Mateus', '1988-08-30', 'Humm numero 123-45', '3204889798', 'es', 1, '2014-04-20 03:27:12', NULL);
+INSERT INTO `dro_users` (`id`, `username`, `password`, `email`, `country_id`, `rol`, `city`, `name`, `birthdate`, `adress`, `phone`, `created`, `modified`) VALUES
+(1, 'dev', 'a14760ef3c8e22a5bbfb6d4eee5ac8ddb9b022b9', 'dev@droni.co', 47, 'Dronico', 'BogotÃ¡', 'Gustavo Enrique BarragÃ¡n SÃ¡nchez', '1988-01-12', 'Cra 86 #89-56', '3143390071', '1899-11-30 00:00:00', NULL),
+(3, 'jjacome', 'a14760ef3c8e22a5bbfb6d4eee5ac8ddb9b022b9', 'jcjacome@unal.edu.co', 47, 'Admin', 'BogotÃ¡', 'Jennyfer Carolina Jacome Suarez', '1994-08-12', 'Calle 86 #95-23 Blq D7 Apto 505', '3114949267', '2016-05-02 22:59:25', '2016-05-02 23:33:29');
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `dro_cats`
+--
+ALTER TABLE `dro_cats`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indexes for table `dro_conts`
+--
+ALTER TABLE `dro_conts`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `slug` (`slug`);
+
+--
+-- Indexes for table `dro_countries`
+--
+ALTER TABLE `dro_countries`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dro_logs`
+--
+ALTER TABLE `dro_logs`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dro_pictures`
+--
+ALTER TABLE `dro_pictures`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dro_posts`
+--
+ALTER TABLE `dro_posts`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `slug` (`slug`);
+
+--
+-- Indexes for table `dro_users`
+--
+ALTER TABLE `dro_users`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`username`), ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `dro_cats`
+--
+ALTER TABLE `dro_cats`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `dro_conts`
+--
+ALTER TABLE `dro_conts`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `dro_countries`
+--
+ALTER TABLE `dro_countries`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=244;
+--
+-- AUTO_INCREMENT for table `dro_logs`
+--
+ALTER TABLE `dro_logs`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
+--
+-- AUTO_INCREMENT for table `dro_pictures`
+--
+ALTER TABLE `dro_pictures`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `dro_posts`
+--
+ALTER TABLE `dro_posts`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `dro_users`
+--
+ALTER TABLE `dro_users`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

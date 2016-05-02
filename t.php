@@ -209,6 +209,10 @@ class timthumb {
 		$this->myHost = preg_replace('/^www\./i', '', $_SERVER['HTTP_HOST']);
 
 		$this->src = $this->param('src');
+		//verificar slash inicial
+		if(preg_match('#^/.*#s', trim($this->src))){
+            $this->src = substr($this->src,1);
+        }
 		if(!is_file($this->src)){
 			$this->src = "img/no_image.jpg";
 		}

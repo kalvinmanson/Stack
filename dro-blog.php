@@ -25,7 +25,7 @@ if($execute == 1) {
     <?php } else { // List Posts ?>
         <?php foreach($posts as &$post) { ?>
             <h1><?php echo $post['dro_posts']['name']; ?></h1>
-            <img src="/t.php?src=contenido/<?php echo $post['dro_posts']['picture']; ?>&w=800&h=400" alt="<?php echo $post['dro_posts']['name']; ?>" class="img-responsive">
+            <img src="/t.php?src=<?php echo $post['dro_posts']['picture']; ?>&w=800&h=400" alt="<?php echo $post['dro_posts']['name']; ?>" class="img-responsive">
             <p><?php echo limitar(strip_tags($post['dro_posts']['content']), 50); ?></p>
             <a href="/blog/<?php echo $post['dro_posts']['slug']; ?>" title="<?php echo $post['dro_posts']['name']; ?>">Leer más...</a>
         <?php } ?>
