@@ -10,4 +10,10 @@ CKEDITOR.editorConfig = function( config ) {
 	config.skin = 'bootstrapck';
 	config.allowedContent = true;
 	config.extraPlugins = 'codemirror';
+	config.filebrowserBrowseUrl = '/drodmin/editor/kcfinder/browse.php?opener=ckeditor&type=files';
+	config.filebrowserImageBrowseUrl = '/drodmin/editor/kcfinder/browse.php?opener=ckeditor&type=images';
+	config.filebrowserFlashBrowseUrl = '/drodmin/editor/kcfinder/browse.php?opener=ckeditor&type=flash';
+	config.filebrowserUploadUrl = '/drodmin/editor/kcfinder/upload.php?opener=ckeditor&type=files';
+	config.filebrowserImageUploadUrl = '/drodmin/editor/kcfinder/upload.php?opener=ckeditor&type=images';
+	config.filebrowserFlashUploadUrl = '/drodmin/editor/kcfinder/upload.php?opener=ckeditor&type=flash';
 };

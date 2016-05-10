@@ -35,7 +35,6 @@ include($file);
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="/drodmin/editor/ckeditor.js" charset="utf-8"></script>
-    <script type="text/javascript" src="/drodmin/editor/ckfinder/ckfinder.js" charset="utf-8"></script>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/css/bootstrap-material-design.min.css" rel="stylesheet" media="screen">
