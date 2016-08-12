@@ -1,0 +1,21 @@
+.anexos { 
+	border: 1px solid #009688; 
+	border-top: 5px solid #009688; 
+}
+h5 {
+	display: block;
+	background-color: #009688;
+	color: #FFFFFF;
+	padding: 7px 15px;
+	float: right;
+	margin: 0;
+}
+.full {
+	background-color: #FFFFFF;
+}
+.full .container {
+	width: 100%;
+}
+.full .add {
+	border: 1px solid red;
+}

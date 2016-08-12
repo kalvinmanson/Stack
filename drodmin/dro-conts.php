@@ -112,11 +112,8 @@ if($execute == 2) { ?>
     <div class="form-group">
       <label for="content">Contenido</label>
       <textarea name="content" class="form-control ckeditor" id="content" rows="10"><?php echo $registro[0]['dro_conts']['content']; ?></textarea>
-    <script type="text/javascript">
-		var editor = CKEDITOR.replace('content');
-		CKFinder.setupCKEditor(editor,'editor/ckfinder' ) ;
-	</script>
     </div>
+    <iframe src="index.php?o=pictures&cont_id=<?php echo $registro[0]['dro_conts']['id']; ?>" frameborder="0" width="100%" name="anexos" class="anexos"></iframe>
     <input type="hidden" name="form" value="edit">
     <input name="id" type="hidden" id="id" value="<?php echo $registro[0]['dro_conts']['id']; ?>">
     <button type="submit" class="btn btn-success btn-raised"><i class="fa fa-save"></i> Guardar</button>

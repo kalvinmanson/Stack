@@ -35,5 +35,10 @@ $(document).ready(function() {
 		}
 	});
 
+	
+	$('.anexos').load(function() {
+	    $(this).height($(this).contents().find("html").height());
+	});
+
 
 });

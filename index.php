@@ -25,23 +25,23 @@
     <link href="/css/ripples.min.css" rel="stylesheet" media="screen">
     <link href="/css/jquery.fancybox.css" rel="stylesheet" media="screen">
     <link href="/css/font-awesome.min.css" rel="stylesheet" media="screen">
-    <link href="/css/animate.css" rel="stylesheet" media="screen">
+    <link href="/css/animations.css" rel="stylesheet" media="screen">
     <link href="/css/main.css" rel="stylesheet" media="screen">
-
-    <?php echo $config['site_metas']; ?>
   </head>
   <body>
   	<div class="container">
     	<header>
-        <h1 class="animated flip" style="display:inline-block;">Titulo del sitio <i class="fa fa-android"></i></h1>
-        <nav>
-        	<ul class="nav nav-justified">
-            	<li><a href="/" class="btn btn-primary">Home</a></li>
-            	<li><a href="/blog">Blog</a></li>
-            	<li><a href="/contacto">Contacto</a></li>
-            	<li><a href="/users">Usuarios</a></li>
-            </ul>
-        </nav>
+            <div class='animatedParent'>
+                <h1>Titulo del sitio <i class="fa fa-android animated flip"></i></h1>
+            </div>
+            <nav>
+            	<ul class="nav nav-justified nav-tabs">
+                	<li><a href="/">Home</a></li>
+                	<li><a href="/blog">Blog</a></li>
+                	<li><a href="/contacto">Contacto</a></li>
+                	<li><a href="/users">Usuarios</a></li>
+                </ul>
+            </nav>
         </header>
         <?php //alert
 		if(isset($_SESSION['alert']) && !empty($_SESSION['alert'])) { 
@@ -71,7 +71,8 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/ripples.min.js"></script>
     <script src="/js/material.min.js"></script>
-	<script src="/js/jquery.fancybox.pack.js"></script>
+    <script src="/js/jquery.fancybox.pack.js"></script>
+    <script src="/js/css3-animate-it.js"></script>
     <script src="/js/main.js"></script>
 
   </body>

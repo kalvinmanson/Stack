@@ -1,7 +1,7 @@
 <?php 
 /*
  ************************************************************
- Drodmin V2.2.0
+ Drodmin V2.2.1
  Desarrollado por Droni.co
  CopyLeft 2016
  ************************************************************
@@ -21,6 +21,9 @@ if(!permitir("Dronico,Admin", $_SESSION['User']['rol'])) { header('Location: log
 	//Usuario
 	$m = new mysql();
 	$usuario_log = $m->query("SELECT * FROM dro_users WHERE username = '".$_SESSION['User']['username']."'");
+
+  //set vars
+  $full = 0;
 if(isset($_GET['o']) && is_file("dro-".$_GET['o'].".php")) { $file="dro-".$_GET['o'].".php"; } else { $file="dro-home.php"; }
 //Contorl de excucion
 $execute = 1;
@@ -41,50 +44,46 @@ include($file);
     <link href="/css/ripples.min.css" rel="stylesheet" media="screen">
     <link href="/css/jquery.fancybox.css" rel="stylesheet" media="screen">
     <link href="/css/font-awesome.min.css" rel="stylesheet" media="screen">
-    <link href="/css/animate.css" rel="stylesheet" media="screen">
-    <link href="/css/main.css" rel="stylesheet" media="screen">
-    <style type="text/css">
-		  <!--
-  		body { margin-top:60px;	}
-  		-->
-  	</style>
+    <link href="/css/drodmin.css" rel="stylesheet" media="screen">
   </head>
-  <body>
+  <body <?php if($full == 1) { echo 'class="full"'; }?>>
+  <?php if($full == 0) { ?>
+    <hr><hr>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/drodmin">Drodmin v2.2.0</a>
-    </div>
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/drodmin">Drodmin v2.2.1</a>
+      </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li<?php if(isset($_GET['o']) && $_GET['o'] == 'conts') { echo ' class="active"';} ?>><a href="?o=conts">Contenidos</a></li>
-        <li<?php if(isset($_GET['o']) && $_GET['o'] == 'posts') { echo ' class="active"';} ?>><a href="?o=posts">Posts</a></li>
-        <li class="dropdown <?php if(isset($_GET['o']) && $_GET['o'] == 'users') { echo ' active';} ?>">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sistema <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="?o=users">Usuarios</a></li>
-            <li><a href="?o=rotas">Rotador</a></li>
-            <li><a href="?o=cats">Categorías</a></li>
-            <li><a href="?o=logs">Logs</a></li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="?do=logout"><i class="glyphicon glyphicon-log-out"></i> Salir</a></li>
-      </ul>
-      
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li<?php if(isset($_GET['o']) && $_GET['o'] == 'conts') { echo ' class="active"';} ?>><a href="?o=conts">Contenidos</a></li>
+          <li<?php if(isset($_GET['o']) && $_GET['o'] == 'posts') { echo ' class="active"';} ?>><a href="?o=posts">Posts</a></li>
+          <li class="dropdown <?php if(isset($_GET['o']) && $_GET['o'] == 'users') { echo ' active';} ?>">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sistema <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="?o=users">Usuarios</a></li>
+              <li><a href="?o=cats">Categorías</a></li>
+              <li><a href="?o=logs">Logs</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="?do=logout"><i class="glyphicon glyphicon-log-out"></i> Salir</a></li>
+        </ul>
+        
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <?php } ?>
 
 
 
@@ -107,13 +106,14 @@ include($file);
 		$execute = 2;
 		include($file);
 		?>
-        
-    <footer>
-	    <hr>
-	    <p><?php echo $config['site_footer']; ?></p>
-    </footer>
-
+  </div>
+  <?php if($full == 0) { ?>
+  <footer>
+    <div class="container">
+      <p><?php echo $config['site_footer']; ?></p>
     </div>
+  </footer>
+  <?php } ?>
     
     <script src="/js/jquery-1.12.3.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
